@@ -4,6 +4,7 @@ import java.util.Random;
 
 import piece.Piece;
 import piece.PieceShape;
+import states.Score;
 
 import java.awt.*;
 
@@ -71,9 +72,15 @@ public class Field {
 					g.fillRect(col * 30, row * 30, 30, 30);
 					g.setColor(Color.WHITE);				
 					g.drawRect(col * 30, row * 30, 30, 30);
+					setupScore(g);
 				}				
 			}
 		}
+	}
+	public void setupScore(Graphics g) {
+		g.setFont(new Font("Georgia", Font.BOLD, 14));
+		g.setColor(Color.BLUE);
+		g.drawString("Score: " + Score.getInstance().getScore().toString(), 310, 20);
 	}
 
 	public boolean isPieceFallen(Piece piece) {
@@ -226,6 +233,7 @@ public class Field {
 	}
 
 	public void shiftRows(int startingRow) {
+		Score.getInstance().scoreCounter();
 		for (int row = startingRow; row > 0; row--) {
 			for (int col = 0; col < this.field[row].length; col++) {
 				this.field[row][col] = this.field[row - 1][col];
